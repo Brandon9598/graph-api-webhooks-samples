@@ -41,11 +41,12 @@ app.post('/facebook', function(req, res) {
 
   if (!req.isXHubValid()) {
     console.log('Warning - request header X-Hub-Signature not present or invalid');
-    res.sendStatus(401);
-    return;
+    // res.sendStatus(401);
+    // return;
+  } else {
+    console.log('request header X-Hub-Signature validated');
   }
 
-  console.log('request header X-Hub-Signature validated');
   // Process the Facebook updates here
   received_updates.unshift(req.body);
   res.sendStatus(200);
