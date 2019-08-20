@@ -38,7 +38,7 @@ app.get(['/facebook', '/instagram'], function(req, res) {
 app.post('/facebook', function(req, res, buf) {
   console.log('Facebook request body:', req.body);
   console.log('Expected Signature', req.headers['x-hub-signature']);
-  console.log('calculated', getSignature(buf))
+  console.log('buf',buf)
 
   if (!req.isXHubValid()) {
     console.log('Warning - request header X-Hub-Signature not present or invalid');
