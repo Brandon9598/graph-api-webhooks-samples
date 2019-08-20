@@ -16,6 +16,7 @@ app.listen(app.get('port'));
 
 app.use(xhub({ algorithm: 'sha1', secret: process.env.APP_SECRET }));
 app.use(bodyParser.json());
+app.use(methodOverride());
 
 var token = process.env.TOKEN || 'token';
 var received_updates = [];
@@ -39,15 +40,11 @@ app.get(['/facebook', '/instagram'], function(req, res) {
 app.post('/facebook', function(req, res) {
   console.log('Facebook request body:', req.body);
   console.log('Facebook request:', req);
-  // console.log("xhub({ algorithm: 'sha1', secret: process.env.APP_SECRET })", xhub({ algorithm: 'sha1', secret: process.env.APP_SECRET }))
-  // console.log('xhub valid', req.isXHubValid())
 
   if (!req.isXHubValid()) {
     console.log('Warning - request header X-Hub-Signature not present or invalid');
-    // res.sendStatus(401);
-    // return;
-  } else {
-    console.log('request header X-Hub-Signature validated');
+    res.sendStatus(401);
+    return;
   }
 
   // Process the Facebook updates here
