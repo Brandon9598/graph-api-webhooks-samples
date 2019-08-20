@@ -23,7 +23,6 @@ var token = process.env.TOKEN || 'token';
 var received_updates = [];
 
 app.get('/', function(req, res) {
-  console.log("Expected", req.headers['x-hub-signature']);
   res.send('<pre>' + JSON.stringify(received_updates, null, 2) + '</pre>');
 });
 
@@ -39,8 +38,9 @@ app.get(['/facebook', '/instagram'], function(req, res) {
 });
 
 app.post('/facebook', function(req, res) {
-  console.log('Facebook request body:', req.body);
-  console.log('Facebook request:', req);
+  // console.log('Facebook request body:', req.body);
+  // console.log('Facebook request:', req);
+  console.log("Expected", req.headers['x-hub-signature']);
 
   if (!req.isXHubValid()) {
     console.log('Warning - request header X-Hub-Signature not present or invalid');
